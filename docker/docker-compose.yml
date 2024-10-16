@@ -4,13 +4,15 @@ services:
   web:
     build: .
     ports:
-      - "5000:5000"
+      - "5000:5000"  # Flask on port 5000
     environment:
       - FLASK_ENV=development
+      - ELASTICSEARCH_HOST=elasticsearch  # Host for Elasticsearch
     volumes:
       - .:/app
     depends_on:
       - mongo
+      - logstash  # Add logstash dependency
 
   mongo:
     image: mongo:7.0.1
@@ -19,5 +21,32 @@ services:
     volumes:
       - mongo-data:/data/db
 
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m  # Set Java heap size
+    ports:
+      - "9200:9200"
+    volumes:
+      - es-data:/usr/share/elasticsearch/data
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.10.0
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.10.0
+    ports:
+      - "5001:5001"  # Logstash on port 5001
+    volumes:
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf  # Map Logstash config
+    depends_on:
+      - elasticsearch
+
 volumes:
   mongo-data:
+  es-data:

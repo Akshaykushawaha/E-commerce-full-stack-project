@@ -2,9 +2,40 @@ from flask import Flask, render_template, request, redirect, url_for, session, j
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 import bcrypt
+import logging
+from elasticsearch import Elasticsearch, ElasticsearchException
 
 # MongoDB Configuration
 mongo = PyMongo()
+
+
+# Connect to Elasticsearch
+try:
+    es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
+    # Check if Elasticsearch is available
+    if not es.ping():
+        raise ValueError("Connection to Elasticsearch failed")
+except ElasticsearchException as e:
+    print(f"Error connecting to Elasticsearch: {e}")
+    es = None  # Disable logging to Elasticsearch if it fails
+
+# Set up file logging
+logging.basicConfig(
+    filename='reports/app.log',
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+
+# Function to log to Elasticsearch
+def log_to_elk(message):
+    if es:
+        try:
+            es.index(index="flask-logs", doc_type="_doc", body={"message": message})
+        except ElasticsearchException as e:
+            logging.error(f"Failed to log to Elasticsearch: {e}")
+    else:
+        logging.error("Elasticsearch not connected. Cannot log message.")
+
 
 def create_app(test_config=None):
     app = Flask(__name__)
@@ -22,6 +53,7 @@ def create_app(test_config=None):
     @app.route('/')
     def home():
         products = mongo.db.products.find()
+        log_to_elk("Home page accessed")
         return render_template('home.html', products=products)
 
     @app.route('/login', methods=['GET', 'POST'])

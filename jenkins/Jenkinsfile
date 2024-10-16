@@ -10,21 +10,33 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    sh 'docker-compose build'
+                    try {
+                        sh 'docker-compose build'
+                    } catch (Exception e) {
+                        error "Build failed: ${e.message}"  // Mark the build as failed with a message
+                    }
                 }
             }
         }
         stage('Test') {
             steps {
                 script {
-                    sh 'docker-compose run web pytest --junitxml=reports/results.xml tests/'
+                    try {
+                        sh 'docker-compose run web pytest --junitxml=reports/results.xml tests/'
+                    } catch (Exception e) {
+                        error "Test execution failed: ${e.message}"  // Mark the build as failed with a message
+                    }
                 }
             }
         }
         stage('Deploy') {
             steps {
                 script {
-                    sh 'docker-compose up -d'
+                    try {
+                        sh 'docker-compose up -d'
+                    } catch (Exception e) {
+                        error "Deployment failed: ${e.message}"  // Mark the build as failed with a message
+                    }
                 }
             }
         }
@@ -33,7 +45,7 @@ pipeline {
     post {
         always {
             junit 'reports/results.xml'  // Assuming you're generating JUnit test reports
-            cleanWs()               // Clean workspace after the build
+            cleanWs()                    // Clean workspace after the build
         }
     }
 }
