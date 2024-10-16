@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/Akshaykushawaha/E-commerce-full-stack-project.git'
+            }
+        }
+        stage('Build') {
+            steps {
+                script {
+                    sh 'docker-compose build'
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                script {
+                    sh 'docker-compose run web pytest --junitxml=reports/results.xml tests/'
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                script {
+                    sh 'docker-compose up -d'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            junit 'reports/results.xml'  // Assuming you're generating JUnit test reports
+            cleanWs()               // Clean workspace after the build
+        }
+    }
+}
