@@ -68,6 +68,8 @@ resource "aws_instance" "app" {
             sudo systemctl start jenkins
             sudo systemctl status jenkins
 
+            sudo usermod -aG docker jenkins
+
             # Install Python and pip
             sudo yum install -y python3
             sudo yum install -y python3-pip  # Explicitly install pip
