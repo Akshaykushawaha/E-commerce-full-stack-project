@@ -1,6 +1,7 @@
 # tests/test_api.py
 import os
 print(os.listdir())
+print(os.listdir("/docker"))
 if os._exists("Flaskapp"):
     print(os.listdir("Flaskapp"))
 import pytest
