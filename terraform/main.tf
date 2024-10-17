@@ -95,6 +95,11 @@ resource "aws_instance" "app" {
 
             # Install Selenium
             sudo pip3 install selenium
+
+            curl -LO https://releases.hashicorp.com/terraform/1.9.6/terraform_1.9.6_linux_amd64.zip
+            unzip terraform_1.9.6_linux_amd64.zip
+            sudo mv terraform /usr/local/bin/
+            
     EOF
     ebs_block_device {
     device_name = "/dev/sdf"  # Use a generic name, AWS will map it correctly
