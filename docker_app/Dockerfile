@@ -20,6 +20,8 @@ RUN ls -la
 # Copy the entire Flask app code into the container
 COPY Flaskapp/ ./Flaskapp/
 
+RUN apt-get update && apt-get install -y wget bzip2 libxtst6 libgtk-3-0 libx11-xcb-dev libdbus-glib-1-2 libxt6 libpci-dev && rm -rf /var/lib/apt/lists/*
+
 # Expose the port your app runs on
 EXPOSE 5000
 
