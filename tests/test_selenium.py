@@ -61,7 +61,7 @@ def browser():
     # Set up Firefox options
     firefox_options = Options()
     firefox_options.add_argument("--headless")  # Run in headless mode
-    firefox_options.log.level = "trace"  # Enables detailed logging
+    firefox_options.log.level = "trace"  # Enables detailed loggin
     service = FirefoxService(log_path="geckodriver.log")
     driver = webdriver.Firefox(service=service, options=firefox_options)
     yield driver
