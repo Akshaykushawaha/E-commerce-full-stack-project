@@ -45,6 +45,9 @@ resource "aws_instance" "app" {
             # Update the package repository
             sudo yum update -y
 
+            sudo yum install git -y
+
+
             # Install Docker
             sudo yum install -y docker
             sudo systemctl start docker
