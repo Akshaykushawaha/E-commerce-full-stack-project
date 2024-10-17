@@ -11,7 +11,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the entire Flask app code into the container
-COPY ../Flaskapp/ ./app/Flaskapp/
+COPY ../Flaskapp/ ./app/Flaska/
 
 # Expose the port your app runs on
 EXPOSE 5000
