@@ -17,7 +17,18 @@ else:
 if os._exists("Flaskapp"):
     print(os.listdir("Flaskapp"))
 import pytest
-from docker_app.Flaskapp.app import create_app, mongo
+import sys
+import os
+
+# Get the current working directory
+current_dir = os.getcwd()
+
+# Add the path to your docker_app directory
+sys.path.append(os.path.join(current_dir, 'docker_app'))
+
+# Now you can import your modules
+from Flaskapp.app import create_app, mongo
+# from docker_app.Flaskapp.app import create_app, mongo
 from flask import session
 from bson.objectid import ObjectId
 import bcrypt
