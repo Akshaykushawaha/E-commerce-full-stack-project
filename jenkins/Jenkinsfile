@@ -82,8 +82,8 @@ pipeline {
 
     post {
         always {
-            //junit 'reports/results.xml'  // Assuming you're generating JUnit test reports
-            cleanWs()                    // Clean workspace after the build
-        }
+            node {
+                cleanWs()  // Clean workspace after the build
+            }
     }
 }
