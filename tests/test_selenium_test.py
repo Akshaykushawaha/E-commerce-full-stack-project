@@ -72,7 +72,6 @@ def test_login_and_add_to_cart_selenium(test_app, browser):
     # Verify home page
     # assert 'Home - E-commerce App' in browser.title
     assert '' in browser.title
-
     # Click on Login
     # login_link = browser.find_element(By.LINK_TEXT, "Login")
     
