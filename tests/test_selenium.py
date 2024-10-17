@@ -6,7 +6,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.service import Service as FirefoxService
 from selenium.webdriver.firefox.options import Options
 import time
-from threading import Thread
 import sys
 import os
 
@@ -18,43 +17,34 @@ sys.path.append(os.path.join(current_dir, 'docker_app'))
 
 # Now you can import your modules
 from Flaskapp.app import create_app, mongo
-# from docker_app.Flaskapp.app import create_app, mongo
 import bcrypt
 
-@pytest.fixture(scope="module")
-def test_app():
+@pytest.fixture
+def client():
     # Setup test database
     test_config = {
         "MONGO_URI": "mongodb+srv://akshay:propertyallotment@cluster0.c9d47cy.mongodb.net/ecommerce_test_db_selenium?retryWrites=true&w=majority&appName=Cluster0",
         "TESTING": True
     }
     app = create_app(test_config)
-
-    # Insert test data
-    with app.app_context():
-        mongo.db.products.insert_one({
-            "name": "Selenium Test Product",
-            "description": "Description for Selenium test product",
-            "price": 25.99,
-            "image_url": "https://www.jagranimages.com/images/newimg/15102024/15_10_2024-bestnoisesmartwatchesformen_23816072.jpg"
-        })
-        mongo.db.users.insert_one({
-            "username": "seleniumuser",
-            "password": bcrypt.hashpw("password".encode('utf-8'), bcrypt.gensalt())
-        })
-
-    # Start Flask app in a separate thread
-    server = Thread(target=app.run, kwargs={"port":5000})
-    server.setDaemon(True)
-    server.start()
-    time.sleep(1)  # Give the server time to start
-
-    yield app
-
-    # Teardown
-    with app.app_context():
+    
+    with app.test_client() as client:
+        with app.app_context():
+            mongo.cx.drop_database('ecommerce_test_db_selenium')
+            # Setup initial data
+            mongo.db.products.insert_one({
+                "name": "Selenium Test Product",
+                "description": "Description for Selenium test product",
+                "price": 25.99,
+                "image_url": "https://www.jagranimages.com/images/newimg/15102024/15_10_2024-bestnoisesmartwatchesformen_23816072.jpg"
+            })
+            mongo.db.users.insert_one({
+                "username": "seleniumuser",
+                "password": bcrypt.hashpw("password".encode('utf-8'), bcrypt.gensalt())
+            })
+        yield client
+        # Teardown
         mongo.cx.drop_database('ecommerce_test_db_selenium')
-    # Note: Flask's development server does not support programmatic shutdown
 
 @pytest.fixture
 def browser():
@@ -67,8 +57,15 @@ def browser():
     driver.quit()
 
 
-def test_login_and_add_to_cart_selenium(test_app, browser):
-    browser.get("http://web:5000/")
+def test_login_and_add_to_cart_selenium(client, browser):
+    # Start the Flask app
+    client.application.run(port=5000, use_reloader=False)  # `use_reloader` is set to False to prevent multiple starts.
+
+    # Give the server a moment to start
+    time.sleep(1)
+
+    # Now use Selenium to interact with the live server.
+    browser.get("http://localhost:5000/")
 
     # Verify home page
     assert 'Home - E-commerce App' in browser.title
