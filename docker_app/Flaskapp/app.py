@@ -4,7 +4,6 @@ from bson.objectid import ObjectId
 import bcrypt
 import logging
 from elasticsearch import Elasticsearch
-from elasticsearch.exceptions import ElasticsearchException
 
 # MongoDB Configuration
 mongo = PyMongo()
@@ -16,7 +15,7 @@ try:
     # Check if Elasticsearch is available
     if not es.ping():
         raise ValueError("Connection to Elasticsearch failed")
-except ElasticsearchException as e:
+except Exception as e:  # Catching all exceptions
     print(f"Error connecting to Elasticsearch: {e}")
     es = None  # Disable logging to Elasticsearch if it fails
 
