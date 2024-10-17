@@ -3,8 +3,8 @@
 import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service as ChromeService
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.firefox.service import Service as FirefoxService
+from selenium.webdriver.firefox.options import Options
 import time
 from threading import Thread
 import sys
@@ -58,12 +58,11 @@ def test_app():
 
 @pytest.fixture
 def browser():
-    chrome_options = Options()
-    chrome_options.add_argument("--headless")  # Run in headless mode
-    chrome_options.add_argument("--no-sandbox")
-    chrome_options.add_argument("--disable-dev-shm-usage")
-    service = ChromeService()  # Assumes chromedriver is in PATH
-    driver = webdriver.Chrome(service=service, options=chrome_options)
+    # Set up Firefox options
+    firefox_options = Options()
+    firefox_options.add_argument("--headless")  # Run in headless mode
+    service = FirefoxService()  # Assumes geckodriver is in PATH
+    driver = webdriver.Firefox(service=service, options=firefox_options)
     yield driver
     driver.quit()
 
