@@ -34,44 +34,59 @@ resource "aws_security_group" "instance" {
 }
 
 resource "aws_instance" "app" {
-  ami           = "ami-02db68a01488594c5"  # Update this to the correct AMI ID for us-east-1
+  ami           = "ami-06b21ccaeff8cd686"  # Update this to the correct AMI ID for us-east-1
   instance_type = "t2.micro"
   vpc_security_group_ids = [aws_security_group.instance.id]
 
-  user_data     = <<-EOF
-              #!/bin/bash
-              sudo apt-get update -y
+    user_data     = <<-EOF
+            #!/bin/bash
+            set -e  # Exit on any error
 
-              # Install Docker
-              sudo apt-get install -y docker.io
-              sudo systemctl start docker
-              sudo systemctl enable docker
+            # Update the package repository
+            sudo yum update -y
 
-              # Install Jenkins
-              sudo apt-get install -y openjdk-11-jdk  # Install Java (required for Jenkins)
-              wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
-              sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
-              sudo apt-get update -y
-              sudo apt-get install -y jenkins
-              sudo systemctl start jenkins
-              sudo systemctl enable jenkins
+            # Install Docker
+            sudo yum install -y docker
+            sudo systemctl start docker
+            sudo systemctl enable docker
 
-              # Install Python, Flask, and pip dependencies
-              sudo apt-get install -y python3-pip
-              pip3 install flask
 
-              # Install Selenium, Chrome, and Chrome WebDriver
-              sudo apt-get install -y wget unzip
-              wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-              sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get install -f -y
-              wget https://chromedriver.storage.googleapis.com/114.0.5735.90/chromedriver_linux64.zip
-              unzip chromedriver_linux64.zip
-              sudo mv chromedriver /usr/bin/chromedriver
-              sudo chmod +x /usr/bin/chromedriver
+            # Install Jenkins
+            sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+            sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+            sudo yum upgrade
+            sudo dnf install java-17-amazon-corretto -y
+            sudo yum install jenkins -y
+            sudo systemctl enable jenkins
+            sudo systemctl start jenkins
+            sudo systemctl status jenkins
 
-              # Install Selenium
-              pip3 install selenium
-              EOF
+            # Install Python and pip
+            sudo yum install -y python3
+            sudo yum install -y python3-pip  # Explicitly install pip
+
+            # Install Flask
+            sudo pip3 install flask
+
+            # Install Selenium, Chrome, and Chrome WebDriver
+            sudo yum install -y wget unzip
+
+            # Install Google Chrome
+            sudo curl https://intoli.com/install-google-chrome.sh | bash
+            sudo mv /usr/bin/google-chrome-stable /usr/bin/google-chrome
+            google-chrome --version && which google-chrome
+
+            # Install ChromeDriver
+            sudo wget https://chromedriver.storage.googleapis.com/80.0.3987.106/chromedriver_linux64.zip
+            sudo unzip chromedriver_linux64.zip
+            sudo mv chromedriver /usr/bin/chromedriver
+            chromedriver --version
+            sudo chmod +x /usr/bin/chromedriver
+
+            # Install Selenium
+            sudo pip3 install selenium
+    EOF
+
 
   tags = {
     Name = "flask-app"

@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        AWS_ACCESS_KEY_ID = credentials('AKIA34AMDHXF7Z5DSGGX')  // Set up AWS credentials in Jenkins
+        AWS_SECRET_ACCESS_KEY = credentials('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')
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -18,13 +23,46 @@ pipeline {
                 }
             }
         }
-        stage('Test') {
+        stage('Run Tests') {
             steps {
                 script {
                     try {
                         sh 'docker-compose run web pytest --junitxml=reports/results.xml tests/'
                     } catch (Exception e) {
                         error "Test execution failed: ${e.message}"  // Mark the build as failed with a message
+                    }
+                }
+            }
+        }
+        stage('Terraform Init') {
+            steps {
+                script {
+                    try {
+                        sh 'terraform init'
+                    } catch (Exception e) {
+                        error "Terraform init failed: ${e.message}"  // Mark the build as failed with a message
+                    }
+                }
+            }
+        }
+        stage('Terraform Plan') {
+            steps {
+                script {
+                    try {
+                        sh 'terraform plan -out=tfplan'  // Create a plan file
+                    } catch (Exception e) {
+                        error "Terraform plan failed: ${e.message}"
+                    }
+                }
+            }
+        }
+        stage('Terraform Apply') {
+            steps {
+                script {
+                    try {
+                        sh 'terraform apply -auto-approve'
+                    } catch (Exception e) {
+                        error "Terraform apply failed: ${e.message}"  // Mark the build as failed with a message
                     }
                 }
             }
