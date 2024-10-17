@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        AWS_ACCESS_KEY_ID = credentials('AKIA34AMDHXF7Z5DSGGX')  // Set up AWS credentials in Jenkins
-        AWS_SECRET_ACCESS_KEY = credentials('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')
+        AWS_ACCESS_KEY_ID = credentials('AKIA34AMDHX'+'FYD2GUCUU')  // Set up AWS credentials in Jenkins
+        AWS_SECRET_ACCESS_KEY = credentials('tEYaanUNiP64HL4mH'+'ZtE+U2WCffSz29wJu21XaO5')
     }
 
     stages {
