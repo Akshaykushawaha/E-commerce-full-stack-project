@@ -22,8 +22,13 @@ COPY Flaskapp/ ./Flaskapp/
 
 RUN apt-get update && apt-get install -y wget bzip2 libxtst6 libgtk-3-0 libx11-xcb-dev libdbus-glib-1-2 libxt6 libpci-dev && rm -rf /var/lib/apt/lists/*
 
+# Install Firefox
+RUN wget -qO - https://mozilla.org/ | tar xz -C /opt
+
 # Expose the port your app runs on
 EXPOSE 5000
 
-# Set the command to run your application
-CMD ["python", "Flaskapp/app.py"]
+# Set the command to run Firefox in headless mode when the container starts
+CMD ["firefox", "-headless"]
+# # Set the command to run your application
+# CMD ["python", "Flaskapp/app.py"]
