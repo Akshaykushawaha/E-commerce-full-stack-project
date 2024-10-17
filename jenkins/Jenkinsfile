@@ -11,7 +11,9 @@ pipeline {
         AWS_ACCESS_KEY_ID = "${AWS_ACCESS_KEY_ID_PART1}${AWS_ACCESS_KEY_ID_PART2}"
         AWS_SECRET_ACCESS_KEY = "${AWS_SECRET_ACCESS_KEY1}${AWS_SECRET_ACCESS_KEY2}"
     }
-
+    tools {
+            git 'Default' // or leave blank if Jenkins is auto-detecting
+        }
     stages {
         stage('Checkout') {
             steps {
