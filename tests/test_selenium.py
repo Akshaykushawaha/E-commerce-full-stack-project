@@ -61,7 +61,8 @@ def browser():
     # Set up Firefox options
     firefox_options = Options()
     firefox_options.add_argument("--headless")  # Run in headless mode
-    service = FirefoxService()  # Assumes geckodriver is in PATH
+    firefox_options.log.level = "trace"  # Enables detailed logging
+    service = FirefoxService(log_path="geckodriver.log")
     driver = webdriver.Firefox(service=service, options=firefox_options)
     yield driver
     driver.quit()
