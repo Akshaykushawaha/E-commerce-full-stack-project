@@ -85,5 +85,6 @@ pipeline {
             node {
                 cleanWs()  // Clean workspace after the build
             }
+        }
     }
 }
