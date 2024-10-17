@@ -28,7 +28,7 @@ RUN wget -qO - https://mozilla.org/ | tar xz -C /opt
 # Expose the port your app runs on
 EXPOSE 5000
 
-# Set the command to run Firefox in headless mode when the container starts
+# Set the command to run Firefox in headless mode wen the container starts
 CMD ["firefox", "-headless"]
 # # Set the command to run your application
 # CMD ["python", "Flaskapp/app.py"]
