@@ -7,7 +7,7 @@ from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.chrome.options import Options
 import time
 from threading import Thread
-from Flaskapp import create_app, mongo
+from docker.Flaskapp.app import create_app, mongo
 import bcrypt
 
 @pytest.fixture(scope="module")
