@@ -1,7 +1,6 @@
 # tests/test_selenium.py
 
 import pytest
-import subprocess
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.service import Service as FirefoxService
@@ -45,7 +44,7 @@ def test_app():
         })
 
     # Start Flask app in a separate thread
-    server = Thread(target=app.run, kwargs={"port":5001})
+    server = Thread(target=app.run, kwargs={"port":5000})
     server.setDaemon(True)
     server.start()
     time.sleep(1)  # Give the server time to start
@@ -60,29 +59,16 @@ def test_app():
 @pytest.fixture
 def browser():
     # Set up Firefox options
-    # Start Xvfb
-    xvfb_cmd = ['Xvfb', ':99', '-ac', '-screen', '0', '1280x1024x16']
-    xvfb = subprocess.Popen(xvfb_cmd)
-
     firefox_options = Options()
-    firefox_options.headless = True
-
-    # Set display to use Xvfb
-    os.environ['DISPLAY'] = ':99'
-
-    service = FirefoxService(log_path="geckodriver.log")
+    firefox_options.add_argument("--headless")  # Run in headless mode
+    service = FirefoxService()  # Assumes geckodriver is in PATH
     driver = webdriver.Firefox(service=service, options=firefox_options)
-    # firefox_options = Options()
-    # firefox_options.add_argument("--headless")  # Run in headless mode
-    # firefox_options.log.level = "trace"  # Enables detailed loggin
-    # service = FirefoxService(log_path="geckodriver.log")
-    # driver = webdriver.Firefox(service=service, options=firefox_options)
     yield driver
     driver.quit()
 
 
 def test_login_and_add_to_cart_selenium(test_app, browser):
-    browser.get("http://localhost:5001/")
+    browser.get("http://localhost:5000/")
 
     # Verify home page
     assert 'Home - E-commerce App' in browser.title
