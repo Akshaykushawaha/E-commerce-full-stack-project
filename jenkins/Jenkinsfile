@@ -9,7 +9,11 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/Akshaykushawaha/E-commerce-full-stack-project.git'
+                try {
+                        git 'https://github.com/Akshaykushawaha/E-commerce-full-stack-project.git'
+                    } catch (Exception e) {
+                        error "Git hi hogaya failed: ${e.message}"  // Mark the build as failed with a message
+                    }
             }
         }
         stage('Build') {
