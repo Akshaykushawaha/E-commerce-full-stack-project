@@ -35,7 +35,7 @@ resource "aws_security_group" "instance" {
 
 resource "aws_instance" "app" {
   ami           = "ami-06b21ccaeff8cd686"  # Update this to the correct AMI ID for us-east-1
-  instance_type = "t2.micro"
+  instance_type = "t2.xlarge"
   vpc_security_group_ids = [aws_security_group.instance.id]
 
     user_data     = <<-EOF
@@ -56,13 +56,14 @@ resource "aws_instance" "app" {
             sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
             # Set the permissions to make it executable
             sudo chmod +x /usr/local/bin/docker-compose
+            # sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
             docker-compose --version
 
             # Install Jenkins
             sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
             sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
             sudo yum upgrade
-            sudo dnf install java-17-amazon-corretto -y
+            sudo yum install java-17-amazon-corretto -y
             sudo yum install jenkins -y
             sudo systemctl enable jenkins
             sudo systemctl start jenkins
@@ -95,6 +96,12 @@ resource "aws_instance" "app" {
             # Install Selenium
             sudo pip3 install selenium
     EOF
+    ebs_block_device {
+    device_name = "/dev/sdf"  # Use a generic name, AWS will map it correctly
+    volume_size = 20           # Size in GB
+    volume_type = "gp3"       # General Purpose SSD
+    delete_on_termination = true  # Delete volume when instance is terminated
+  }
 
 
   tags = {
