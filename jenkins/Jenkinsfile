@@ -83,7 +83,11 @@ pipeline {
     post {
         always {
             script {
-                cleanWs()  // Clean workspace after the build
+                if (env.WORKSPACE) {
+                    cleanWs()  // Clean workspace if WORKSPACE variable is available
+                } else {
+                    echo "No workspace available to clean."
+                }
             }
         }
     }
