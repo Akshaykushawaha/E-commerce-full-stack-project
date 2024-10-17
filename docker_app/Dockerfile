@@ -30,5 +30,6 @@ EXPOSE 5000
 
 # Set the command to run Firefox in headless mode when the container starts
 CMD ["firefox", "-headless"]
+
 # # Set the command to run your application
 # CMD ["python", "Flaskapp/app.py"]
