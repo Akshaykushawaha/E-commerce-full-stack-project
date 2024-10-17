@@ -59,11 +59,23 @@ def test_app():
 @pytest.fixture
 def browser():
     # Set up Firefox options
+    # Start Xvfb
+    xvfb_cmd = ['Xvfb', ':99', '-ac', '-screen', '0', '1280x1024x16']
+    xvfb = subprocess.Popen(xvfb_cmd)
+
     firefox_options = Options()
-    firefox_options.add_argument("--headless")  # Run in headless mode
-    firefox_options.log.level = "trace"  # Enables detailed loggin
+    firefox_options.headless = True
+
+    # Set display to use Xvfb
+    os.environ['DISPLAY'] = ':99'
+
     service = FirefoxService(log_path="geckodriver.log")
     driver = webdriver.Firefox(service=service, options=firefox_options)
+    # firefox_options = Options()
+    # firefox_options.add_argument("--headless")  # Run in headless mode
+    # firefox_options.log.level = "trace"  # Enables detailed loggin
+    # service = FirefoxService(log_path="geckodriver.log")
+    # driver = webdriver.Firefox(service=service, options=firefox_options)
     yield driver
     driver.quit()
 
