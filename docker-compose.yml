@@ -1,11 +1,9 @@
 version: '3.8'
-
+context: ./docker
+dockerfile: Dockerfile
 services:
   web:
-    build: 
-    context: ./docker
-    dockerfile: Dockerfile
-    
+    build: .
     ports:
       - "5000:5000"  # Flask on port 5000
     environment:
