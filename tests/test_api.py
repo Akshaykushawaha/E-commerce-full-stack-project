@@ -1,6 +1,19 @@
 # tests/test_api.py
 import os
+print("1")
 print(os.listdir("./"))
+# List contents of the current working directory
+print("2")
+print(os.listdir())
+print("3")
+print(os.listdir(list(os.listdir())[6]))
+print("4")
+# List contents of the 'docker' directory in the current working directory
+docker_dir = "docker"
+if os.path.exists(docker_dir):
+    print(os.listdir(docker_dir))
+else:
+    print(f"The directory {docker_dir} does not exist.")
 if os._exists("Flaskapp"):
     print(os.listdir("Flaskapp"))
 import pytest
