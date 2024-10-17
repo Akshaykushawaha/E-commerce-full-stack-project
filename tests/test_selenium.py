@@ -61,7 +61,7 @@ def browser():
     # Set up Firefox options
     firefox_options = Options()
     firefox_options.add_argument("--headless")  # Run in headless mode
-    service = FirefoxService()  # Assumes geckodriver is in PATH
+    service = FirefoxService(executable_path='/usr/local/bin/geckodriver')  # Assumes geckodriver is in PATH
     driver = webdriver.Firefox(service=service, options=firefox_options)
     yield driver
     driver.quit()
