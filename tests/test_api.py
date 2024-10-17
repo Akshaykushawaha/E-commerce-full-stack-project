@@ -17,7 +17,7 @@ else:
 if os._exists("Flaskapp"):
     print(os.listdir("Flaskapp"))
 import pytest
-from docker.Flaskapp.app import create_app, mongo
+from docker_app.Flaskapp.app import create_app, mongo
 from flask import session
 from bson.objectid import ObjectId
 import bcrypt
