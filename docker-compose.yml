@@ -45,7 +45,7 @@ services:
     ports:
       - "5001:5001"  # Logstash on port 5001
     volumes:
-      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf  # Map Logstash config
+      - ./elkd/logstash.conf:/usr/share/logstash/pipeline/logstash.conf  # Map Logstash config
     depends_on:
       - elasticsearch
 
