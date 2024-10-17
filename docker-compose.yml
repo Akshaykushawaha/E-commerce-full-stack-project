@@ -1,9 +1,10 @@
 version: '3.8'
-context: ./docker
-dockerfile: Dockerfile
+
 services:
   web:
-    build: .
+    build:
+      context: ./docker  # Point to the directory containing the Dockerfile
+      dockerfile: Dockerfile  # Specify the Dockerfile name
     ports:
       - "5000:5000"  # Flask on port 5000
     environment:
