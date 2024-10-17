@@ -3,7 +3,8 @@ from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 import bcrypt
 import logging
-from elasticsearch import Elasticsearch, ElasticsearchException
+from elasticsearch import Elasticsearch
+from elasticsearch.exceptions import ElasticsearchException
 
 # MongoDB Configuration
 mongo = PyMongo()
