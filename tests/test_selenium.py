@@ -66,6 +66,7 @@ def browser():
     yield driver
     driver.quit()
 
+
 def test_login_and_add_to_cart_selenium(test_app, browser):
     browser.get("http://localhost:5001/")
 
