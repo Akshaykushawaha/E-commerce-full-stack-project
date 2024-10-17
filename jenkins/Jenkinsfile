@@ -23,11 +23,16 @@ pipeline {
             steps {
                 script {
                 try {
-                        git 'https://github.com/Akshaykushawaha/E-commerce-full-stack-project.git'
+                        checkout([
+                            $class: 'GitSCM',
+                            branches: [[name: '*/main']],  // Specify the branch here
+                            userRemoteConfigs: [[
+                                url: 'https://github.com/Akshaykushawaha/E-commerce-full-stack-project.git'
+                            ]]
+                        ])
                     } catch (Exception e) {
-                        error "Git hi hogaya failed: ${e.message}"  // Mark the build as failed with a message
+                        error "Checkout failed: ${e.message}"
                     }
-                }
             }
         }
         stage('Build') {
