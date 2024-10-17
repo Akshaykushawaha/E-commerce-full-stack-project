@@ -23,7 +23,7 @@ import os
 # Get the current working directory
 current_dir = os.getcwd()
 
-# Add the path to your docker_app directory
+# Add the path to your docker_app director
 sys.path.append(os.path.join(current_dir, 'docker_app'))
 
 # Now you can import your modules
