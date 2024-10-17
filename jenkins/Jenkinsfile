@@ -11,6 +11,10 @@ pipeline {
     //     // AWS_ACCESS_KEY_ID = "${AWS_ACCESS_KEY_ID_PART1}${AWS_ACCESS_KEY_ID_PART2}"
     //     // AWS_SECRET_ACCESS_KEY = "${AWS_SECRET_ACCESS_KEY1}${AWS_SECRET_ACCESS_KEY2}"
     // }
+    environment {
+        AWS_ACCESS_KEY_ID = credentials('f92706c5-6299-4913-b210-527e03fe6dc3')  // Using the ID
+        AWS_SECRET_ACCESS_KEY = credentials('f92706c5-6299-4913-b210-527e03fe6dc3')  // Using the same ID for secret
+    }
     tools {
             git 'Default' // or leave blank if Jenkins is auto-detecting
         }
