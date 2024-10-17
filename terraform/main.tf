@@ -53,6 +53,10 @@ resource "aws_instance" "app" {
             sudo systemctl start docker
             sudo systemctl enable docker
 
+            sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+            # Set the permissions to make it executable
+            sudo chmod +x /usr/local/bin/docker-compose
+            docker-compose --version
 
             # Install Jenkins
             sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo

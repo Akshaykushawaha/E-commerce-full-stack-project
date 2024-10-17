@@ -36,6 +36,14 @@ pipeline {
             }
         }
         }
+        stage('Check Directory') {
+            steps {
+                script {
+                    sh 'pwd'  // Print the current working directory
+                    sh 'ls -la'  // List files in the directory
+                }
+            }
+        }
         stage('Build') {
             steps {
                 script {
