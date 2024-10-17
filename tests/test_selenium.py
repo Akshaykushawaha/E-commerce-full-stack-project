@@ -44,7 +44,7 @@ def test_app():
         })
 
     # Start Flask app in a separate thread
-    server = Thread(target=app.run, kwargs={"port":5000})
+    server = Thread(target=app.run, kwargs={"port":5022})
     server.setDaemon(True)
     server.start()
     time.sleep(1)  # Give the server time to start
@@ -68,7 +68,7 @@ def browser():
 
 
 def test_login_and_add_to_cart_selenium(test_app, browser):
-    browser.get("http://localhost:5000/")
+    browser.get("http://localhost:5022/")
 
     # Verify home page
     assert 'Home - E-commerce App' in browser.title
