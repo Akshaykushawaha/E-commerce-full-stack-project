@@ -21,7 +21,7 @@ except Exception as e:  # Catching all exceptions
 
 # Set up file logging
 logging.basicConfig(
-    filename='docker_app/reports/app.log',
+    filename='/reports/app.log',
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
