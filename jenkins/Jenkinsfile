@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     environment {
-        AWS_ACCESS_KEY_ID_PART1 = credentials('AKIA34AMDHX')
-        AWS_ACCESS_KEY_ID_PART2 = credentials('F7TYTMVCY')
-        AWS_SECRET_ACCESS_KEY1 = credentials('sWab9u/souMpp/sLh')
-        AWS_SECRET_ACCESS_KEY2 = credentials('3Otc9Qr3PBfHbPEqhymaY97')
+        // AWS_ACCESS_KEY_ID_PART1 = credentials('AKIA34AMDHX')
+        // AWS_ACCESS_KEY_ID_PART2 = credentials('F7TYTMVCY')
+        // AWS_SECRET_ACCESS_KEY1 = credentials('sWab9u/souMpp/sLh')
+        // AWS_SECRET_ACCESS_KEY2 = credentials('3Otc9Qr3PBfHbPEqhymaY97')
         // AWS_ACCESS_KEY_ID = credentials('AKIA34AMDHX'+'FYD2GUCUU')  // Set up AWS credentials in Jenkins
         // AWS_SECRET_ACCESS_KEY = credentials('tEYaanUNiP64HL4mH'+'ZtE+U2WCffSz29wJu21XaO5')
-        AWS_ACCESS_KEY_ID = "${AWS_ACCESS_KEY_ID_PART1}${AWS_ACCESS_KEY_ID_PART2}"
-        AWS_SECRET_ACCESS_KEY = "${AWS_SECRET_ACCESS_KEY1}${AWS_SECRET_ACCESS_KEY2}"
+        AWS_ACCESS_KEY_ID = "${97af5755-e428-4c15-}${9eaf-80f43f44923f}"
+        AWS_SECRET_ACCESS_KEY = "${97af5755-e428-4c15-}${9eaf-80f43f44923f}"
     }
     // environment {
     //     AWS_ACCESS_KEY_ID = credentials('97af5755-e428-4c15-9eaf-80f43f44923f')  // Using the ID
