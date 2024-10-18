@@ -42,12 +42,11 @@ COPY Flaskapp/templates/register.html ./Flaskapp/templates/register.html
 COPY Flaskapp/templates/login.html ./Flaskapp/templates/login.html
 COPY Flaskapp/templates/cart.html ./Flaskapp/
 COPY Flaskapp/__init__.py ./Flaskapp/__init__.py
-COPY static/ ./static/
-COPY static/css/ ./static/css/
-COPY static/css/styles.css ./static/css/styles.css
-COPY static/js/ ./static/js/
-COPY static/js/scripts.js ./static/js/scripts.js
-
+COPY Flaskapp/static/ ./Flaskapp/static/
+COPY Flaskapp/static/css/ ./Flaskapp/static/css/
+COPY Flaskapp/static/css/styles.css ./Flaskapp/static/css/styles.css
+COPY Flaskapp/static/js/ ./Flaskapp/static/js/
+COPY Flaskapp/static/js/scripts.js ./Flaskapp/static/js/scripts.js
 
 # Expose the port your app runs on
 EXPOSE 5000
