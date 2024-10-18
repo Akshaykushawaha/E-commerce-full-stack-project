@@ -50,7 +50,7 @@ def test_app():
     server_thread.start()
     # Wait for Flask to be fully up and responsive
     def wait_for_flask():
-        url = "http://web:5005/"
+        url = "http://localhost:5005/"
         for attempt in range(10):  # Retry 10 times
             print(f"Attempt {attempt + 1} to connect to Flask...")
             try:
@@ -86,7 +86,7 @@ def browser():
 
 
 def test_login_and_add_to_cart_selenium(test_app, browser):
-    browser.get("http://web:5005/")
+    browser.get("http://localhost:5005/")
 
     # Verify home page
     assert 'Home - E-commerce App' in browser.title
