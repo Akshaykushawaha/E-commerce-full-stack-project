@@ -18,6 +18,19 @@ services:
       - mongo
       - logstash  # Add logstash dependency
 
+  selenium:
+    image: selenium/standalone-firefox:latest
+    ports:
+      - "4444:4444"
+    environment:
+      - SCREEN_WIDTH=1920
+      - SCREEN_HEIGHT=1080
+    networks:
+      - app-network
+    depends_on:
+      - web
+
+
   mongo:
     image: mongo:7.0.1
     ports:
