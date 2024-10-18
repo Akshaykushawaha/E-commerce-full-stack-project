@@ -17,7 +17,7 @@ services:
       - ./reports:/app/reports
     depends_on:
       - mongo
-      - logstash  # Add logstash dependency
+      - logstash  # Add logstash  dependency
     networks:
       - app-network
 
