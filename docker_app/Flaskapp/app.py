@@ -11,10 +11,17 @@ mongo = PyMongo()
 
 # Connect to Elasticsearch
 try:
+    print("Using elasticsearch as: elasticsearch:9200...")
     es = Elasticsearch([{'host': 'elasticsearch', 'port': 9200, 'scheme': 'http'}])
     # Check if Elasticsearch is available
     if not es.ping():
-        raise ValueError("Connection to Elasticsearch failed")
+        print("Using elasticsearch as: localhost:9200...")
+        es = Elasticsearch([{'host': 'localhost', 'port': 9200, 'scheme': 'http'}])
+        if not es.ping():
+            print("Using elasticsearch as: 172.31.26.196:9200...")
+            es = Elasticsearch([{'host': '172.31.26.196', 'port': 9200, 'scheme': 'http'}])
+            if not es.ping():
+                raise ValueError("Connection to Elasticsearch failed")
 except Exception as e:  # Catching all exceptions
     print(f"Error connecting to Elasticsearch: {e}")
     es = None  # Disable logging to Elasticsearch if it fails
