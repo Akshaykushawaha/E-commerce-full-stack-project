@@ -54,7 +54,7 @@ def client():
 def test_home_page(client):
     response = client.get('/')
     assert response.status_code == 200
-    assert b'Welcome to Our Store' in response.data
+    assert b'Featured Products' in response.data
     assert b'Test Product 1' in response.data
     assert b'Test Product 2' in response.data
 
