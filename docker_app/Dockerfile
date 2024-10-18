@@ -36,6 +36,18 @@ RUN ls -la
 
 # Copy the entire Flask app code into the container
 COPY Flaskapp/ ./Flaskapp/
+COPY Flaskapp/templates/ ./Flaskapp/templates/
+COPY Flaskapp/templates/home.html ./Flaskapp/templates/home.html
+COPY Flaskapp/templates/register.html ./Flaskapp/templates/register.html
+COPY Flaskapp/templates/login.html ./Flaskapp/templates/login.html
+COPY Flaskapp/templates/cart.html ./Flaskapp/
+COPY Flaskapp/__init__.py ./Flaskapp/__init__.py
+COPY static/ ./static/
+COPY static/css/ ./static/css/
+COPY static/css/styles.css ./static/css/styles.css
+COPY static/js/ ./static/js/
+COPY static/js/scripts.js ./static/js/scripts.js
+
 
 # Expose the port your app runs on
 EXPOSE 5000
