@@ -111,7 +111,7 @@ pipeline {
             steps {
                 script {
                     try {
-                        sh 'docker-compose up -d --remove-orphans --no-cache'
+                        sh 'docker-compose up -d --build --force-recreate --remove-orphans'
                     } catch (Exception e) {
                         error "Deployment failed: ${e.message}"  // Mark the build as failed with a message
                     }
