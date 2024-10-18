@@ -41,4 +41,4 @@ COPY Flaskapp/ ./Flaskapp/
 EXPOSE 5000
 
 # Set the command to run your application
-CMD ["python", "docker_app/Flaskapp/app.py"]
+CMD ["python", "Flaskapp/app.py"]
