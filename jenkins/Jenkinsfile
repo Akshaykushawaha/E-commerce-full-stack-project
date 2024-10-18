@@ -40,7 +40,7 @@ pipeline {
             steps {
                 script {
                     sh 'pwd'  // Print the current working directory
-                    sh 'ls -la'  // List files in the directory
+                    sh 'ls -la'  // List files in the director
                 }
             }
         }
