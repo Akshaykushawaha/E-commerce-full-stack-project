@@ -4,6 +4,7 @@ from bson.objectid import ObjectId
 import bcrypt
 import logging
 from elasticsearch import Elasticsearch
+import os
 
 # MongoDB Configuration
 mongo = PyMongo()
@@ -26,9 +27,22 @@ except Exception as e:  # Catching all exceptions
     print(f"Error connecting to Elasticsearch: {e}")
     es = None  # Disable logging to Elasticsearch if it fails
 
+
+
+# Define the path for the log file
+log_file_path = 'Flaskapp/reports/app.log'
+# Check if the log file exists
+if os.path.isfile(log_file_path):
+    print(f"The log file '{log_file_path}' exists.")
+else:
+    print(f"The log file '{log_file_path}' does not exist. It will be created.")
+
+# Check if the directory exists; if not, create it
+os.makedirs(os.path.dirname(log_file_path), exist_ok=True)
+
 # Set up file logging
 logging.basicConfig(
-    filename='Flaskapp/reports/app.log',
+    filename=log_file_path,
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s'
 )

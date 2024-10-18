@@ -18,6 +18,8 @@ services:
     depends_on:
       - mongo
       - logstash  # Add logstash dependency
+      - elasticsearch
+      - kibana
     networks:
       - app-network
 
