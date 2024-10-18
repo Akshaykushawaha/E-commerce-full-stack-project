@@ -1,29 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - E-commerce App</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; /* Ensures the body takes the full height of the viewport */
+    }
+    
+    /* Top bar styling */
+    header {
+        background-color: #ff9800;
+        color: white;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        width: 98%;
+        height: 6%;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+    }
+    
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        gap: 15px;
+    }
+    
+    nav ul li {
+        display: inline;
+    }
+    
+    nav ul li a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+    }
+    
+    nav ul li a:hover {
+        text-decoration: underline;
+    }
+    
+    /* Sidebar styling */
+    .sidebar {
+        width: 250px;
+        background-color: #37474f;
+        position: fixed;
+        top: 70px; /* Adjusted for header */
+        bottom: 0;
+        padding: 20px;
+        color: white;
+    }
+    
+    .sidebar h2 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+    
+    .sidebar a {
+        display: block;
+        padding: 10px;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        background-color: #546e7a;
+    }
+    
+    .sidebar a:hover {
+        background-color: #ff9800;
+    }
+    
+    /* Main content */
+    main {
+        flex: 1; /* This allows the main content to stretch and fill available space */
+        margin-left: 270px;
+        padding: 100px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    form {
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        width: 400px;
+    }
+    
+    form label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+        color: #333;
+    }
+    
+    form input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    
+    form button {
+        background-color: #ff9800;
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 1rem;
+        margin-top: 10px;
+    }
+    
+    form button:hover {
+        background-color: #f57c00;
+    }
+    
+    /* Footer styling */
+    footer {
+        background-color: #37474f;
+        color: white;
+        text-align: center;
+        padding: 20px 0;
+        width: 100%;
+        margin-top: auto; /* Ensures the footer stays at the bottom */
+    }
+    
+    footer a {
+        color: #ff9800;
+        text-decoration: none;
+    }
+    
+    footer a:hover {
+        text-decoration: underline;
+    }
+    
+    /* Responsive design */
+    @media screen and (max-width: 600px) {
+        .sidebar {
+            width: 100%;
+            position: relative;
+            top: 0;
+            margin-bottom: 20px;
+        }
+    
+        main {
+            margin-left: 0;
+        }
+    }
+    
+    </style>
+
 </head>
+
 <body>
+
+    <!-- Top Bar -->
     <header>
         <h1>Login</h1>
         <nav>
-            <a href="{{ url_for('home') }}">Home</a>
-            <a href="{{ url_for('register') }}">Register</a>
+            <ul>
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('register') }}">Register</a></li>
+            </ul>
         </nav>
     </header>
 
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <h2>Categories</h2>
+        <a href="#">Electronics</a>
+        <a href="#">Fashion</a>
+        <a href="#">Home & Garden</a>
+        <a href="#">Beauty & Health</a>
+        <a href="#">Sports</a>
+    </aside>
+
+    <!-- Main Content -->
     <main>
         <form action="{{ url_for('login') }}" method="POST">
             <label for="username">Username:</label>
             <input type="text" name="username" id="username" required>
-            
+
             <label for="password">Password:</label>
             <input type="password" name="password" id="password" required>
-            
+
             <button type="submit">Login</button>
         </form>
     </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 E-commerce App. All rights reserved.</p>
+        <nav>
+            <a href="#">Privacy Policy</a> |
+            <a href="#">Terms of Service</a> |
+            <a href="#">Contact Us</a>
+        </nav>
+    </footer>
+
 </body>
+
 </html>

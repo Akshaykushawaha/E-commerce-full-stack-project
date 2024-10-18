@@ -1,0 +1,16 @@
+2024-10-18 10:32:10,092 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-10-18 10:32:10,092 - INFO - [33mPress CTRL+C to quit[0m
+2024-10-18 10:32:10,105 - INFO -  * Restarting with watchdog (windowsapi)
+2024-10-18 10:32:27,485 - WARNING -  * Debugger is active!
+2024-10-18 10:32:27,495 - INFO -  * Debugger PIN: 102-958-011
+2024-10-18 15:00:09,900 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5000
+2024-10-18 15:00:09,900 - INFO - [33mPress CTRL+C to quit[0m
+2024-10-18 15:00:09,911 - INFO -  * Restarting with watchdog (windowsapi)
+2024-10-18 15:00:43,576 - WARNING -  * Debugger is active!
+2024-10-18 15:00:43,586 - INFO -  * Debugger PIN: 102-958-011
+2024-10-18 15:03:20,376 - INFO -  * Detected change in 'C:\\Users\\aksha\\anaconda3\\Scripts\\conda-script.py', reloading
+2024-10-18 15:03:22,141 - INFO -  * Restarting with watchdog (windowsapi)
+2024-10-18 15:03:56,259 - WARNING -  * Debugger is active!
+2024-10-18 15:03:56,271 - INFO -  * Debugger PIN: 102-958-011

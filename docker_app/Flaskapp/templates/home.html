@@ -1,43 +1,271 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - E-commerce App</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}"> -->
     <script src="{{ url_for('static', filename='js/scripts.js') }}" defer></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Top bar styling */
+        header {
+            background-color: #ff9800;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            height: 60px; /* Fixed height for mobile and desktop */
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            font-size: 2rem;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 15px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        /* Sidebar styling */
+        .sidebar {
+            width: 250px;
+            background-color: #37474f;
+            position: fixed;
+            top: 70px; /* Adjusted to start below the header */
+            bottom: 0;
+            padding: 20px;
+            color: white;
+        }
+
+        .sidebar h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 10px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            background-color: #546e7a;
+        }
+
+        .sidebar a:hover {
+            background-color: #ff9800;
+        }
+
+        /* Main content */
+        main {
+            margin-left: 270px;
+            padding: 100px 200px 20px; /* Adjusted padding to ensure content is visible below the fixed header */
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3-column grid for desktop */
+            gap: 20px;
+        }
+
+        .product-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .product-card h3 {
+            font-size: 1.2rem;
+            color: #ff9800;
+            margin-bottom: 10px;
+        }
+
+        .product-card p {
+            color: #757575;
+            margin-bottom: 15px;
+        }
+
+        .add-to-cart-btn {
+            background-color: #ff9800;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #f57c00;
+        }
+
+        .login-link {
+            color: #ff9800;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .login-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer styling */
+        footer {
+            background-color: #37474f;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        footer a {
+            color: #ff9800;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive design */
+        @media screen and (max-width: 768px) {
+            /* Adjusting the sidebar for mobile */
+            .sidebar {
+                width: 100%;
+                position: relative;
+                top: 60px; /* Adjust based on header height */
+                margin-bottom: 20px;
+            }
+
+            main {
+                margin-left: 0;
+                padding: 20px; /* Reduce padding for mobile */
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr; /* 1-column grid for mobile */
+            }
+
+            header {
+                height: auto; /* Adjust header height */
+                flex-direction: column; /* Stack header elements */
+                text-align: center;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+
 </head>
+
 <body>
+
+    <!-- Top Bar -->
     <header>
-        <h1>Welcome to Our Store</h1>
+        <h1>E-commerce Store</h1>
         <nav>
-            {% if session.username %}
-                <span>Logged in as {{ session.username }}</span>
-                <a href="{{ url_for('cart') }}">Cart</a>
-                <a href="{{ url_for('logout') }}">Logout</a>
-            {% else %}
-                <a href="{{ url_for('login') }}">Login</a>
-                <a href="{{ url_for('register') }}">Register</a>
-            {% endif %}
+            <ul>
+                {% if session.username %}
+                    <li>Logged in as {{ session.username }}</li>
+                    <li><a href="{{ url_for('cart') }}">Cart</a></li>
+                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                {% endif %}
+            </ul>
         </nav>
     </header>
 
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <h2>Categories</h2>
+        <a href="#">Electronics</a>
+        <a href="#">Fashion</a>
+        <a href="#">Home & Garden</a>
+        <a href="#">Beauty & Health</a>
+        <a href="#">Sports</a>
+    </aside>
+
+    <!-- Main Content -->
     <main>
-        <h2>Products</h2>
-        <div class="products">
+        <h2>Featured Products</h2>
+        <div class="products-grid">
             {% for product in products %}
-                <div class="product">
+                <div class="product-card">
                     <img src="{{ product.image_url }}" alt="{{ product.name }}">
                     <h3>{{ product.name }}</h3>
                     <p>{{ product.description }}</p>
                     <p>Price: ${{ "%.2f"|format(product.price) }}</p>
                     {% if session.username %}
-                        <button onclick="addToCart('{{ product._id }}')">Add to Cart</button>
+                        <button class="add-to-cart-btn" onclick="addToCart('{{ product._id }}')">Add to Cart</button>
                     {% else %}
-                        <p><a href="{{ url_for('login') }}">Login to add to cart</a></p>
+                        <p><a class="login-link" href="{{ url_for('login') }}">Login to add to cart</a></p>
                     {% endif %}
                 </div>
             {% endfor %}
         </div>
     </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 E-commerce App. All rights reserved.</p>
+        <nav>
+            <a href="#">Privacy Policy</a> |
+            <a href="#">Terms of Service</a> |
+            <a href="#">Contact Us</a>
+        </nav>
+    </footer>
+
 </body>
+
 </html>

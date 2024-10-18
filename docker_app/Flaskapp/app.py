@@ -11,7 +11,7 @@ mongo = PyMongo()
 
 # Connect to Elasticsearch
 try:
-    es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
+    es = Elasticsearch([{'host': 'localhost', 'port': 9200, 'scheme': 'http'}])
     # Check if Elasticsearch is available
     if not es.ping():
         raise ValueError("Connection to Elasticsearch failed")
@@ -53,7 +53,7 @@ def create_app(test_config=None):
     @app.route('/')
     def home():
         products = mongo.db.products.find()
-        log_to_elk("Home page accessed")
+        # log_to_elk("Home page accessed")
         return render_template('home.html', products=products)
 
     @app.route('/login', methods=['GET', 'POST'])
@@ -160,7 +160,7 @@ def create_app(test_config=None):
             if existing_user:
                 return 'Username already exists'
             
-            hashed_pw = str(bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt()))
+            hashed_pw = bcrypt.hashpw(request.form['password'].encode('utf-8'), bcrypt.gensalt())
             users.insert_one({
                 'username': request.form['username'],
                 'password': hashed_pw

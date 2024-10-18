@@ -7,7 +7,6 @@ services:
       dockerfile: Dockerfile  # Specify the Dockerfile name
     ports:
       - "5000:5000"  # Flask on port 5000
-      - "5022:5022"  # selenium webdriver
     environment:
       - FLASK_ENV=development
       - ELASTICSEARCH_HOST=elasticsearch  # Host for Elasticsearch
