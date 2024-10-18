@@ -17,8 +17,6 @@ services:
     depends_on:
       - mongo
       - logstash  # Add logstash dependency
-    networks:
-      - app-network
 
   selenium:
     image: selenium/standalone-firefox:latest
@@ -27,8 +25,6 @@ services:
     environment:
       - SCREEN_WIDTH=1920
       - SCREEN_HEIGHT=1080
-    networks:
-      - app-network
     depends_on:
       - web
 
@@ -39,8 +35,7 @@ services:
       - "27017:27017"
     volumes:
       - mongo-data:/data/db
-    networks:
-      - app-network  # Connect to the app-network
+
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
@@ -51,8 +46,7 @@ services:
       - "9200:9200"
     volumes:
       - es-data:/usr/share/elasticsearch/data
-    networks:
-      - app-network  # Connect to the app-network
+
     
 
   kibana:
@@ -72,14 +66,9 @@ services:
       - ./elkd/logstash.conf:/usr/share/logstash/pipeline/logstash.conf  # Map Logstash config
     depends_on:
       - elasticsearch
-    networks:
-      - app-network  # Connect to the app-network
+
 
 volumes:
   mongo-data:
   es-data:
 
-# Define the custom network for all services to use
-networks:
-  app-network:
-    driver: bridge
