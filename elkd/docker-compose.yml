@@ -27,7 +27,7 @@ services:
     image: docker.elastic.co/logstash/logstash:7.10.0
     volumes:
       - ./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-      - ../reports:/reports
+      - ../docker_app/Flaskapp/reports:/reports
     depends_on:
       - elasticsearch
     ports:
