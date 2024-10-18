@@ -107,17 +107,17 @@ pipeline {
     // //             }
     // //         }
     // //     }
-    // //     stage('Deploy') {
-    // //         steps {
-    // //             script {
-    // //                 try {
-    // //                     sh 'docker-compose up -d'
-    // //                 } catch (Exception e) {
-    // //                     error "Deployment failed: ${e.message}"  // Mark the build as failed with a message
-    // //                 }
-    // //             }
-    // //         }
-    // //     }
+        stage('Deploy') {
+            steps {
+                script {
+                    try {
+                        sh 'docker-compose up -d'
+                    } catch (Exception e) {
+                        error "Deployment failed: ${e.message}"  // Mark the build as failed with a message
+                    }
+                }
+            }
+        }
     }
 
     post {
