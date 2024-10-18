@@ -6,8 +6,8 @@ pipeline {
         // AWS_ACCESS_KEY_ID_PART2 = credentials('F7TYTMVCY')
         // AWS_SECRET_ACCESS_KEY1 = credentials('sWab9u/souMpp/sLh')
         // AWS_SECRET_ACCESS_KEY2 = credentials('3Otc9Qr3PBfHbPEqhymaY97')
-        part1 = credentials('97af5755-e428-4c15-')
-        part2 = credentials('9eaf-80f43f44923f')
+        part1 = '97af5755-e428-4c15-'
+        part2 = '9eaf-80f43f44923f'
         // AWS_ACCESS_KEY_ID = credentials('AKIA34AMDHX'+'FYD2GUCUU')  // Set up AWS credentials in Jenkins
         // AWS_SECRET_ACCESS_KEY = credentials('tEYaanUNiP64HL4mH'+'ZtE+U2WCffSz29wJu21XaO5')
         AWS_ACCESS_KEY_ID = "${part1}${part2}"
