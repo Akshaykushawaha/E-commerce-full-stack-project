@@ -9,6 +9,8 @@ import time
 import threading
 import sys
 import os
+import requests
+
 
 # Get the current working directory
 current_dir = os.getcwd()
@@ -43,9 +45,27 @@ def test_app():
         })
 
     # Start the Flask app in a separate thread
-    server_thread = threading.Thread(target=app.run, kwargs={"port": 5000, "use_reloader": False})
+    server_thread = threading.Thread(target=app.run, kwargs={"port": 5005, "use_reloader": False})
     server_thread.setDaemon(True)
     server_thread.start()
+    # Wait for Flask to be fully up and responsive
+    def wait_for_flask():
+        url = "http://web:5005/"
+        for attempt in range(10):  # Retry 10 times
+            print(f"Attempt {attempt + 1} to connect to Flask...")
+            try:
+                response = requests.get(url)
+                if response.status_code == 200:
+                    print("Flask app is up and running!")
+                    return True
+            except requests.ConnectionError:
+                print("Flask not up yet. Retrying...")
+            time.sleep(2)  # Wait before the next attempt
+        return False
+
+    print("Waiting for Flask app to start...")
+    if not wait_for_flask():
+        raise RuntimeError("Flask app did not start in time")
     time.sleep(1)  # Give the server time to start
 
     yield app
@@ -66,7 +86,7 @@ def browser():
 
 
 def test_login_and_add_to_cart_selenium(test_app, browser):
-    browser.get("http://web:5000/")
+    browser.get("http://web:5005/")
 
     # Verify home page
     assert 'Home - E-commerce App' in browser.title
