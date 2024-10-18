@@ -9,9 +9,11 @@ services:
       - "5000:5000"  # Flask on port 5000
     environment:
       - FLASK_ENV=development
+      - FLASK_RUN_HOST=0.0.0.0
       - ELASTICSEARCH_HOST=elasticsearch  # Host for Elasticsearch
     volumes:
       - .:/app
+      - ./reports:/app/reports
     depends_on:
       - mongo
       - logstash  # Add logstash dependency
