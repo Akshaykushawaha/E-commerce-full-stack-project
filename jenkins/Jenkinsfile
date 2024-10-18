@@ -50,7 +50,7 @@ pipeline {
             steps {
                 script {
                     try {
-                        sh 'docker-compose -f ./docker-compose.yml build'
+                        sh 'docker-compose -f ./docker-compose.yml build --no-cache'
                     } catch (Exception e) {
                         error "Build failed: ${e.message}"  // Mark the build as failed with a message
                     }
@@ -111,7 +111,7 @@ pipeline {
             steps {
                 script {
                     try {
-                        sh 'docker-compose up -d --remove-orphans'
+                        sh 'docker-compose up -d --remove-orphans --no-cache'
                     } catch (Exception e) {
                         error "Deployment failed: ${e.message}"  // Mark the build as failed with a message
                     }
