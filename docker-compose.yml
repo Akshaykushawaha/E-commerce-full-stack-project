@@ -14,7 +14,7 @@ services:
     volumes:
       - .:/app
       - ./docker_app/Flaskapp:/app/Flaskapp
-      - ./docker_app/Flaskapp/reports:/app/reports
+      - .docker_app/Flaskapp/reports:/app/reports
     depends_on:
       - mongo
       - logstash  # Add logstash dependency
