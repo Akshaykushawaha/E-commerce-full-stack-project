@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify, render_template_string
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 import bcrypt
